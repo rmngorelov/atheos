@@ -1,0 +1,100 @@
+
+<ion-view >
+
+
+
+
+  <ion-nav-bar class="bar-stable nav-title-slide-ios7"
+  >
+    <ion-nav-back-button></ion-nav-back-button>
+
+     <ion-nav-buttons side="right">
+          <button class="button button-icon icon ion-search" ui-sref="app.search"  ></button>
+          <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+        </ion-nav-buttons>
+
+  </ion-nav-bar>
+
+  <ion-content class="category has-header"
+  >
+
+
+  <div ng-if="!preferences.awards_description_hide" class="card heading" style="margin: 0px;"
+   ng-click="preferences.awards_description_hide = !preferences.awards_description_hide"
+  >
+    <div class="item item-text-wrap" style="border:0px;">
+
+      <div   >
+
+        <div class="screen-description" ng-bind-html="properties['awards-description'].description | markdown"></div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <ion-item
+  class="persona item-content item-text-wrap item-icon-right heading"
+  ng-click="preferences.awards_description_hide = !preferences.awards_description_hide"
+  style="border-top:0px; "
+  >
+    <div ng-if="preferences.awards_description_hide">
+
+      <div   style="clear:left">
+          <img class="image-tiny-header"   src="img/achievements.png" />
+      </div>
+      <div  >Awards</div>
+    </div>
+    <i    class="icon"
+    ng-class="!preferences.awards_description_hide ? 'ion-chevron-up' : 'ion-chevron-down'"
+    ></i>
+  </ion-item>
+
+
+<!--
+TODO
+play sound
+open_award when users click on an award they've received
+no_award_earned if users click on a reward they haven’t earned yet
+ -->
+<!-- <div id="persona-award-container"
+     class="card"
+     ng-repeat="persona in root.children | filter: { hidden: false } "
+      >
+      <h3 >{{persona.name}}</h3>
+      <section  style="padding-left:43px">
+        <img
+          ng-repeat="item in persona.awards()"
+          ng-click="showAwardPopup(item);"
+          ng-class="!item.awarded ? 'disabled' : ''"
+          class="image-medium  "
+          alt="" src="{{item.image}}"
+          style="margin:5px"
+          ></img>
+      </section>
+<div> -->
+
+
+  <div  class="award-section row row-center"
+        ng-repeat="persona in root.children | filter: { hidden: false } ">
+    <div
+      style = " display: block;
+                margin-left: auto;
+                margin-right: auto ;
+                width :100%;"
+      class="col-90" >
+      <h3 ng-bind-html="persona.name | markdown" ng-click="jump_to_cave_level(persona)" ></h3>
+      <img
+        ng-repeat="item in persona.awards()"
+        ng-click="showAwardPopup(item);"
+        ng-class="!item.awarded ? 'disabled' : ''"
+        class="image-medium  "
+        alt="" src="{{item.image}}"
+        style="margin:5px"
+        ></img>
+    </div>
+  </div>
+
+  </ion-content>
+
+</ion-view>

@@ -1,0 +1,38 @@
+
+<ion-view>
+
+  <ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+      <ion-nav-back-button></ion-nav-back-button>
+  </ion-nav-bar>
+
+
+  <ion-content class=" has-header padding">
+
+    <div>
+
+      <div class="card " ng-show="!showTerms">
+        <div class="item item-divider">
+        </div>
+        <div class="heading item item-text-wrap terms-header "
+          style="background-color: #652c11 !important"
+        ng-bind-html="properties['terms-and-conditions-header'].description | markdown">
+        </div>
+
+        <div class="item item-divider " style="padding-top:2em;padding-bottom:2em;">
+            <a  class="terms-show"  ng-click="showTerms = !showTerms">Show Terms and Conditions</a>
+        </div>
+
+      </div>
+
+      <div class="terms" ng-if="showTerms"  ng-bind-html="properties['terms-and-conditions'].description | markdown" ></div>
+
+
+      <button class="button button-positive" style="float:right;" ng-click="terms_accepted[0].checked = true ; saveTermsAccepted()">
+        {{ terms_accepted[0].checked ? terms_accepted[0].text : 'Accept to continue' }}
+      </button>
+
+    </div>
+
+  </ion-content>
+
+</ion-view>

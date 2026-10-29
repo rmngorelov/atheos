@@ -1,0 +1,45 @@
+<ion-view  >
+
+
+
+
+    <ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+      <ion-nav-back-button></ion-nav-back-button>
+
+     <ion-nav-buttons side="right">
+        <button class="button button-icon icon ion-search" ui-sref="app.search"  ></button>
+        <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+      </ion-nav-buttons>
+
+    </ion-nav-bar>
+
+  <ion-content class="category has-header ">
+
+
+
+      <ion-item
+      class="perna item-content item-text-wrap item-icon-right heading"
+      style="border-top:0px;"
+      >
+        <div>Credits</div>
+      </ion-item>
+
+      <div ng-repeat="person in team" >
+        <ion-item class="persona item-stable item-icon-right"
+                   href="#/app/credit/{{person.name}}"
+                  >
+          <img  ng-if="person.image"  class="image-small"   src="{{person.image}}" />
+          <img  ng-if="!person.image" class="image-small"   src="img/person.png" />
+          <span class="item-text-wrap">{{person.name}}</span>
+          <i class="icon" ng-class="person.show ? 'ion-chevron-down' : 'ion-chevron-up'"></i>
+        </ion-item>
+        <ion-item class="item-accordion"
+          ng-show="person.how">
+            <div class="answer item-content item-text-wrap" >{{person.description}}</div>
+        </ion-item>
+
+      </div>
+
+
+  </ion-content>
+</ion-view>

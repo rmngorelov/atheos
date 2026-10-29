@@ -1,0 +1,70 @@
+<ion-side-menus enable-menu-with-back-views="true" >
+
+<ion-side-menu-content>
+
+
+
+    <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+</ion-side-menu-content>
+
+  <ion-side-menu  side="right">
+
+
+    <ion-content class="category has-header">
+
+      <ion-list >
+
+        <ion-item class="menu"  ng-click="toggleRight()" href="#/app/personas">
+          <i class="ion-home"></i> Home
+        </ion-item>
+
+        <ion-item class="menu"  ng-click="toggleRight()" href="#/app/favorites">
+         <i class="ion-ios-star"></i>  Favorites
+        </ion-item>
+
+        <ion-item class="menu"  ng-click="toggleRight()" href="#/app/awards">
+         <i class="ion-trophy"></i>  Awards
+        </ion-item>
+
+        <ion-item class="menu"  ng-click="toggleRight()" href="#/app/trends">
+         <i class="ion-arrow-graph-up-right"></i>  Trending
+        </ion-item>
+
+        <ion-item class="menu"  ng-click="toggleRight()" href="#/app/store">
+         <i class="ion-ios-cart"></i>  Store
+        </ion-item>
+
+        <ion-item class="menu"  ng-click="toggleRight()" href="#/app/glossary">
+          <i class="ion-ios-book"></i>  Glossary
+        </ion-item>
+
+        <!--
+        <ion-item class="menu"  ng-click="toggleRight()" href="#/app/about">
+        <i class="ion-information-circled"></i>  About
+        </ion-item> -->
+
+        <ion-item class="menu"  ng-click="toggleRight()" href="#/app/tutorial">
+        <i class="ion-eye"></i>  Overview
+       </ion-item>
+
+
+       <ion-item class="menu" href="{{bugReport(question.id)}}" ng-click="toggleRight();" >
+         <i class="ion-speakerphone"></i>  Talk to us
+       </ion-item>
+
+
+        <ion-item class="menu" ng-click="toggleRight()" href="#/app/about">
+          <i class="ion-information-circled"></i>  About
+        </ion-item>
+
+
+
+      </ion-list>
+
+
+
+
+
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

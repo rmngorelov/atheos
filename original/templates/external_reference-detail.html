@@ -1,0 +1,54 @@
+
+
+<ion-view  >
+
+  <ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+      <ion-nav-back-button></ion-nav-back-button>
+
+         <ion-nav-buttons side="right">
+          <button class="button button-icon icon ion-search" ui-sref="app.search"  ></button>
+          <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+        </ion-nav-buttons>
+
+  </ion-nav-bar>
+
+
+  <ion-content class="has-header"  padding="true"  >
+    <div class="category item-content item-text-wrap" style=" font-size:larger;" ng-bind-html="reference.name | markdown" ></div>
+    <!-- <span style="float:right;"  >
+      <button class="button button-clear" style="font-weight:bold;font-size:14px;color: #db6b33 !important;margin-right:3em;" ng-click="decrementScrollFont()">
+      T
+      </button>
+      <button class="button button-clear" style="font-weight:bold; font-size:18px;color: #db6b33 !important" ng-click="incrementScrollFont()">
+      T
+      </button>
+    </span> -->
+    <div class="answer" style="float:left;padding:0px;width:100%;"
+       ng-style="{'font-size': scroll_font_size + 'px'}"
+       ng-bind-html="reference.essay_description  +   reference.description | markdown"></div>
+
+     <div class="button-bar inline-counts" ng-if="hasCounts(reference.id)" ng-click="goToStateWithParams({'name':'app.quiz-comments'},{'quizId':'ExternalReference','questionId':reference.id}) ">
+         {{formatCounts(reference.id)}}
+     </div>
+
+     <div class="button-bar quiz-actions   ">
+       <a  style="clear:left" class="button  quiz-actions button-outline icon-button " ng-class="reference.favorite ? 'ion-ios-star' : 'ion-ios-star-outline'" ng-click="toggleFavorite(reference);$event.stopPropagation();"><span>Like</span></a>
+       <a  class="button  button-outline icon-button ion-chatbox " ng-click="goToStateWithParams({'name':'app.quiz-comments'},{'quizId':'ExternalReference','questionId':reference.id}) "><span>Comment</span></a>
+       <a  class="button button-outline icon-button  ion-android-share-alt "   ng-click="share(reference)" ><span>Share</span></a>
+     </div>
+
+
+    <!-- <image ng-if="reference.link && reference.image" src="{{reference.image}}" ng-click="openURL(reference.link)"></i></p>
+    <i ng-if="reference.link && !reference.image" class="icon ion-link button-icon" ng-click="openURL(reference.link)"></i></p> -->
+
+    <div class="quiz-contributor" style=" margin-top:1em;" >
+      <a ng-if="reference.link && reference.contributor"  style=" font-size:larger; color: #ffe8db !important; background-color: #210C02 !important;text-decoration: underline;"
+        ng-click="openURL(reference.link)"
+       >
+        {{reference.contributor}}
+      </a>
+    </div>
+
+
+  </ion-content>
+</ion-view>

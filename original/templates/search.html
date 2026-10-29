@@ -1,0 +1,104 @@
+
+
+<ion-view>
+
+
+  <ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+    <ion-nav-back-button></ion-nav-back-button>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+
+
+  <ion-content class="category has-header">
+
+    <ion-item
+    class="persona item-content item-text-wrap item-icon-left item-icon-right"
+    >
+      <i class="clear-search icon ion-ios-close-empty" style="left:4px" ng-click="data.searchQuery = '';clearSearch()"></i>
+      <input style="width:100%" type="search" placeholder="{{data.searchQuery ? data.searchQuery : 'Search' }}" ng-model="data.searchQuery" ng-enter="search()"/>
+      <i    class="icon ion-search" ng-click="search()" ></i>
+    </ion-item>
+
+
+    <ion-spinner ng-if="searching" style="padding-top: 8px;"></ion-spinner>
+
+    <div  ng-if="(!results || results.length == 0) && preferences.recentSearchQuery"  class="list saved-search-query">
+      <h4>Recently Searched:</h4>
+      <!-- ng-repeat arrays of strings weirdness -->
+      <div ng-repeat="query in preferences.recentSearchQuery track by $index">
+        <p   ng-click="data.searchQuery=preferences.recentSearchQuery[$index];search()" >{{preferences.recentSearchQuery[$index]}}</p>
+      </div>
+    </div>
+
+    <ion-item  ng-if="results.length > 10"
+      class="persona item-content item-text-wrap"
+      >
+      <p class="search-result" style="font-weight:bold;color: #ffe8db">Displaying 10 items out of {{results.length}}.  Narrow search terms for fewer results.</p>
+    </ion-item>
+
+    <!-- <div  ng-if="results.length > 0"  class="list">
+      <a style="text-decoration: none; " class="collection-item search-item item item-icon-right"
+        collection-repeat="item in results | limitTo: 10 "
+        collection-item-width="'100%'"
+        collection-item-height="getItemHeight(item, $index)"
+        ng-style="{height: getItemHeight(item, $index)}  ; "
+        ng-attr-href="{{getUrl(item)}}"
+        >
+        <div  class="item-stable item-text-wrap" style="overflow: hidden; text-overflow:clip; height:4em; " >
+            <img    class="image-small" alt="" src="{{getImageUrl(item)}}"  style="  height: 4em;width: 4em; margin-right:16px" />
+            <span  ng-if="item.description.length > 1 " class="search-result" ng-bind-html="item.essay_description + item.description | markdown   | limitTo: 140" ></span>
+            <span  ng-if="item.description.length == 0 " class="search-result" >{{   item.name    | limitTo: 140 }}...</span>
+            <span  ng-if="item.essay_description.length >  1 " class="search-result" ng-bind-html="item.essay_description  | markdown  | limitTo: 140" ></span>
+            <i class="icon ion-chevron-right"  ></i>
+        </div>
+      </a>
+    </div> -->
+
+
+    <!-- <div  ng-if="results.length > 0"  class="list">
+      <a style="text-decoration: none; " class="collection-item search-item item item-icon-right"
+        collection-repeat="item in results | limitTo: 10 "
+        collection-item-width="'100%'"
+        collection-item-height="getItemHeight(item, $index)"
+        ng-style="{height: getItemHeight(item, $index)}  ; "
+        ng-attr-href="{{getUrl(item)}}"
+        >
+        <div  class="item-stable item-text-wrap" style="overflow: hidden; text-overflow:clip; height:4em; " >
+            <img    class="image-small" alt="" src="{{getImageUrl(item)}}"  style="  height: 4em;width: 4em; margin-right:16px" />
+            <span  ng-if="item.description.length > 1 " class="search-result" ng-bind-html="item.essay_description + item.description | markdown   | limitTo: 140" ></span>
+            <span  ng-if="item.description.length == 0 " class="search-result" >{{   item.name    | limitTo: 140 }}...</span>
+            <span  ng-if="item.essay_description.length >  1 " class="search-result" ng-bind-html="item.essay_description  | markdown  | limitTo: 140" ></span>
+            <i class="icon ion-chevron-right"  ></i>
+        </div>
+      </a>
+    </div> -->
+
+    <ion-list ng-if="results.length > 0" >
+      <ion-item class="persona item-icon-right "
+                ng-repeat="item in results | limitTo: 10"
+                ng-attr-href="{{getUrl(item)}}"
+                >
+          <div  class="item-stable item-text-wrap"  >
+              <img    class="image-small" alt="" src="{{getImageUrl(item)}}"  style="  height: 4em;width: 4em; margin-right:16px" />
+              <span  ng-if="item.description.length > 1 && !item.essay_description " class="search-result" ng-bind-html="item.description | markdown   | limitTo: 140" ></span>
+              <span  ng-if="item.description.length == 0 " class="search-result" >{{   item.name    | limitTo: 140 }}...</span>
+              <span  ng-if="item.essay_description " class="search-result" ng-bind-html="item.essay_description | markdown   | limitTo: 140" ></span>
+              <i class="icon ion-chevron-right"  ></i>
+          </div>
+      </ion-item>
+      <!-- <ion-infinite-scroll on-infinite="scrollableCountsAddItems()"></ion-infinite-scroll> -->
+    </ion-list>
+
+
+
+
+
+
+
+
+  </ion-content>
+
+
+</ion-view>

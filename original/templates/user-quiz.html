@@ -1,0 +1,122 @@
+
+<ion-view>
+
+  <ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+      <ion-nav-back-button></ion-nav-back-button>
+      <ion-nav-buttons side="right">
+        <button class="button button-icon icon ion-search" ui-sref="app.search"  ></button>
+        <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+      </ion-nav-buttons>
+  </ion-nav-bar>
+
+
+  <ion-content class="category has-header user-quiz">
+  <!--
+  Create tabs with an icon and label, using the tabs-positive style.
+  Each tab's child <ion-nav-view> directive will have its own
+  navigation history that also transitions its views in and out.
+  -->
+  <ion-tabs class="tabs-icon-top tabs-color-active-positive">
+
+    <!-- Dashboard Tab -->
+    <ion-tab title="Quiz" icon="ion-university" >
+      <ion-view title="Quiz">
+          <ion-content overflow-scroll="true" padding="true" scroll="false" >
+              <h4>Create a new quiz or add to a new one</h4>
+              <form class="list">
+                  <ion-list >
+                      <label class="item item-select item-stacked-label"
+                      name="quiz_id"
+                       >
+                          <span class="input-label">Quiz</span>
+                          <select ng-model="quiz_id"
+                                  ng-options="quiz.id as quiz.name for quiz in persona.children"
+                                  ng-change="selectedQuiz(quiz_id)" >
+                            <option value="">New</option>
+                          </select>
+                      </label>
+                      <label ng-if="!quiz_id" class="item item-input item-stacked-label" name="name">
+                          <span class="input-label">Name</span>
+                          <textarea placeholder="Short, memorable quiz name" rows="1" ng_model="current_quiz.name"></textarea>
+                      </label>
+                      <label ng-if="!quiz_id" class="item item-input item-stacked-label" name="description" ng_model="current_quiz.description">
+                          <span class="input-label">Description</span>
+                          <textarea placeholder="Longer descriptions" rows="4" ></textarea>
+                      </label>
+                  </ion-list>
+                  <button ng-if="!quiz_id" class="button button-stable button-block " ng_click="newQuiz()">Save</button>
+              </form>
+          </ion-content>
+      </ion-view>
+    </ion-tab>
+
+    <!-- Question Tab -->
+    <ion-tab title="Questions" icon="ion-help"  >
+      <ion-view title="Question">
+          <ion-content overflow-scroll="true" padding="true" scroll="false" >
+              <h4>Describe a question in {{quiz.name}} {{question_id}}</h4>
+              <form class="list">
+                  <ion-list>
+                      <label class="item item-select item-stacked-label" name="previous_question">
+                          <span class="input-label">Insert After</span><br/>
+                          <select ng-model="question_id" ng-options="question.id as question.description for question in quiz.children">
+                            <option value="">First</option>
+                          </select>
+                      </label>
+                      <label class="item item-input item-stacked-label" name="prefix" >
+                          <span class="input-label">Prefix</span>
+                          <textarea placeholder="Prefix Introduction" rows="1" ng-model="new_question.prefix"></textarea>
+                      </label>
+                      <label class="item item-input item-stacked-label" name="description">
+                          <span class="input-label">Text</span>
+                          <textarea placeholder="Short, direct question" rows="4" ng-model="new_question.description"></textarea>
+                      </label>
+                      <label class="item item-input  item-stacked-label" name="image">
+                          <span class="input-label">Image</span>
+                          <input type="text" placeholder="Image full url" ng-model="new_question.image"></input>
+                      </label>
+                      <label class="item item-input  item-stacked-label" name="reference">
+                          <span class="input-label">Reference</span>
+                          <input type="text" placeholder="Reference full url" ng-model="new_question.reference"></input>
+                      </label>
+                  </ion-list>
+                  <label class="item item-select" name="question_type">
+                      <span class="input-label">Type</span>
+                      <select ng-model="new_question.question_type">
+                          <option>Yes/No</option>
+                          <option>Multiple Choice</option>
+                      </select>
+                  </label>
+                  <button class="button button-stable button-block " ng_click="newQuestion()">Save</button>
+              </form>
+          </ion-content>
+      </ion-view>
+    </ion-tab>
+    <!--Answer Tab -->
+    <ion-tab title="Answer" icon="ion-checkmark" >
+      <ion-view title="Answer">
+          <h4>Describe the anwers</h4>
+          <ion-content overflow-scroll="true" padding="true" scroll="false" class="has-header">
+              <form class="list">
+                  <ion-list>
+                      <label class="item item-input  item-stacked-label" name="description">
+                          <span class="input-label item-stacked-label">Answer</span>
+                          <textarea placeholder="Short, clear answer" rows="4" ></textarea>
+                      </label>
+                      <ion-toggle toggle-class="toggle-positive" name="correct">Correct?</ion-toggle>
+                      <label class="item item-input item-stacked-label" name="why_right">
+                          <span class="input-label">Why Right</span>
+                          <textarea placeholder="Explain why right" rows="4" ></textarea>
+                      </label>
+                      <label class="item item-input item-stacked-label" name="why_wrong">
+                          <span class="input-label">Why Wrong</span>
+                          <textarea placeholder="Explain why incorrect" rows="4" ></textarea>
+                      </label>
+                  </ion-list>
+                  <button class="button button-stable button-block ">Save</button>
+              </form>
+          </ion-content>
+      </ion-view>
+    </ion-tab>
+  </ion-tabs>
+</ion-view>

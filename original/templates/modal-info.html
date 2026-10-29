@@ -1,0 +1,22 @@
+  <div class="modal">
+
+    <!-- Modal header bar -->
+    <ion-header-bar class="bar-secondary">
+      <h1 class="title">{{entityToShow.type}} Info</h1>
+      <button class="button button-clear button-positive" ng-click="closeModalInfo()">Cancel</button>
+    </ion-header-bar>
+
+    <!-- Modal content area -->
+    <ion-content>
+
+      <p>description:{{entityToShow.description}}</p>
+      <p ng-if="entityToShow.reference">reference:{{entityToShow.reference}} <i ng-if="entityToShow.link" class="icon ion-link button-icon" ng-click="openURL(entityToShow.link)"></i></p>
+   
+      
+
+       
+
+
+    </ion-content>
+
+  </div>

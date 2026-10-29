@@ -1,0 +1,95 @@
+
+
+<ion-view  title="Atheos"  >
+
+    <ion-nav-bar class="bar-stable nav-title-slide-ios7"  align-title="left" >
+      <ion-nav-buttons side="right">
+        <button class="button button-icon icon ion-search" ui-sref="app.search"  ></button>
+        <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+
+  <ion-content class="has-header">
+
+
+    <div ng-if="!preferences.level_select_description_hide"
+      class="card heading"
+      style="margin:0px"
+      ng-click="preferences.level_select_description_hide = !preferences.level_select_description_hide"
+
+    >
+
+    <ion-item
+    class="persona item-content item-text-wrap"
+      <span class="center-container" ng-if="!preferences.level_select_description_hide" >
+        <img  style="float:left" class="image-small " alt="" src="img/Enter-The-Cave-Orange-180x180ppi-v1.png" />
+        <p class="screen-description " style="overflow: hidden" ng-bind-html="properties['cave-levels-description'].description | markdown"></p>
+      </span>
+    </ion-item>
+
+
+    </div>
+
+
+
+    <ion-item
+    class="persona item-content item-text-wrap item-icon-right heading"
+    ng-click="preferences.level_select_description_hide = !preferences.level_select_description_hide"
+    style="border-top:0px;"
+    >
+        <span class="center-container" ng-if="preferences.level_select_description_hide" >
+          <img   class="image-small" alt="" src="img/Enter-The-Cave-Orange-180x180ppi-v1.png"  />
+          <div class="category center-text " >Cavemap</div>
+        </span>
+        <span  ng-if="!preferences.level_select_description_hide" >
+          <div class="minimize-header" >Less</div>
+        </span>
+        <span  ng-if="preferences.level_select_description_hide" class="minimize-header"
+        style="float: right;margin-top: -3em;" >More</span>
+      <i    class="icon"
+      ng-class="!preferences.level_select_description_hide ? 'ion-chevron-up' : 'ion-chevron-down'"
+      ></i>
+    </ion-item>
+
+
+
+    <ion-list>
+
+      <ion-item ng-repeat="persona in personas() track by $index"
+      type="item-content item-text-wrap"
+      class="persona item-icon-right"
+      style="border-color: #db6b33 !important; "
+      ng-attr-href="{{'#/app/persona/' + persona.id }}"
+      ng-if="!persona.hidden"
+      >
+
+
+        <span class="center-container">
+
+          <div  ng-if="persona.locked"  style="
+            position:absolute;
+              left:0;
+              top:0;
+              background: rgba(255,255,255,.1) !important;
+              width:100%;
+              height:500px;
+              "
+              ></div>
+
+            <img   class="image-small" alt="" src="{{persona.image}}" />
+
+            <span class="category  item-text-wrap  center-text " ng-bind-html="persona.name | markdown"> </span>
+
+        </span>
+
+        <i ng-if="!persona.locked" style="z-index: -1;" class="icon ion-chevron-right"  ></i>
+        <!-- <i ng-if="persona.locked style="z-index: -1;" class="icon ion-ios-cart"  ></i> -->
+
+
+      </ion-item>
+
+
+
+    </ion-list>
+  </ion-content>
+</ion-view>

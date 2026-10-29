@@ -1,0 +1,91 @@
+<ion-view    >
+
+
+  <ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+        <ion-nav-back-button></ion-nav-back-button>
+
+      <ion-nav-buttons side="right">
+          <button class="button button-icon icon ion-search" ui-sref="app.search"  ></button>
+          <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
+  <ion-content class="category has-header ">
+
+
+    <div ng-if="!preferences.about_description_hide" class="card heading" style="margin: 0px"
+     ng-click="preferences.about_description_hide = !preferences.about_description_hide"
+    >
+      <div class="item item-text-wrap" style="border:0px;">
+
+        <div   >
+
+          <div class="screen-description" ng-bind-html="properties['about-description'].description | markdown"></div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <ion-item
+    class="persona item-content item-text-wrap item-icon-right heading"
+    ng-click="preferences.about_description_hide = !preferences.about_description_hide"
+    style="border-top:0px;"
+    >
+
+
+    <div ng-if="preferences.about_description_hide">
+
+      <div   style="clear:left">
+          <img class="image-tiny-header"   src="img/more.png" />
+      </div>
+      <div  >About</div>
+    </div>
+
+      <i    class="icon"
+      ng-class="!preferences.about_description_hide ? 'ion-chevron-up' : 'ion-chevron-down'"
+      ></i>
+    </ion-item>
+
+
+
+
+    <ion-list class="persona styled-list">
+
+
+      <ion-item  class="persona    item-icon-right" ui-sref="app.credits" >
+        <img  class="image-small"   src="img/credits.png" />
+        <span class="category">Credits<br/></span>
+        <i class="icon ion-chevron-right"  ></i>
+      </ion-item>
+
+      <ion-item  class="persona item-icon-right" ui-sref="app.terms-and-conditions" >
+        <img  class="image-small"   src="img/privacyPolicy.png" />
+        <span class="category">Terms & Conditions<br/></span>
+        <i class="icon ion-chevron-right"  ></i>
+      </ion-item>
+
+      <ion-item  class="persona item-icon-right" ui-sref="app.account" >
+        <img  class="image-small"   src="img/Settings_180x180_v1.png" />
+        <span class="category">Settings<br/></span>
+        <i class="icon ion-chevron-right"  ></i>
+      </ion-item>
+      <!--
+      <ion-item  class="persona   item-icon-right" ui-sref="app.store" >
+        <img  class="image-small"   src="img/Store_180x180.png" />
+        <span class="category">Store<br/></span>
+        <i class="icon ion-chevron-right"  ></i>
+      </ion-item>
+
+
+      <ion-item  class="persona   item-icon-right" ui-sref="app.persona-intro" >
+        <img  class="image-small"   src="img/External-Reference_180x180_v1.png" />
+        <span class="category">Tutorial<br/></span>
+        <i class="icon ion-chevron-right"  ></i>
+      </ion-item>
+      -->
+
+    </ion-list>
+
+  </ion-content>
+</ion-view>

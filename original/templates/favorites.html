@@ -1,0 +1,45 @@
+<ion-view>
+
+  <ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+
+    <ion-nav-back-button></ion-nav-back-button>
+
+
+
+      <ion-nav-buttons side="right">
+          <button class="button button-icon icon ion-search" ui-sref="app.search"  ></button>
+          <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+        </ion-nav-buttons>
+
+  </ion-nav-bar>
+
+
+
+  <ion-content class="category has-header">
+
+    <div ng-if="!preferences.favorites.length > 0">
+    <h4>You have no favorites at this time.</h4>
+    </div>
+
+    <ion-list ng-if="preferences.favorites.length   > 0" >
+      <ion-item class="persona item-text-wrap item-icon-right"
+        ng-repeat="item in preferences.favorites track by $index"
+        href="{{getUrl(item)}}"
+        >
+          <span class="center-container">
+            <img   class="image-small" alt="" src="{{getImageUrl(item)}}" />
+            <div class="center-text" style="font-weight:normal;font-family: 'Merriweather Sans' !important;padding-right:20px">{{item.essay_description ? item.essay_description : item.description | limitTo: 140}}</div>
+        </span>
+
+
+       <a  class="icon"  ng-class="item.favorite ? 'ion-ios-star' : 'ion-ios-star-outline'"
+       ng-click="toggleFavorite(item);$event.stopPropagation();" style="right:44px"></a>
+
+        <i class="icon ion-chevron-right"  ></i>
+      </ion-item>
+
+    </ion-list>
+
+  </ion-content>
+
+</ion-view>

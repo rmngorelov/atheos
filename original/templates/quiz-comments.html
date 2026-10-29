@@ -1,0 +1,73 @@
+<ion-view id="userMessagesView" hide-back-button="false"  >
+
+  <ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+    <ion-nav-back-button></ion-nav-back-button>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon icon ion-search" ui-sref="app.search"   ></button>
+      <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+
+
+  <ion-content
+     class="has-header has-footer"
+   >
+
+   <div ng-if="!authData"  class="login-header">
+        <h2>What's on your mind?</h2>
+       <button class="button button-calm icon ion-social-twitter button-round" ng-click="login('twitter')"></button>
+       <button class="button button-positive icon ion-social-facebook button-round" ng-click="login('facebook')"></button>
+       <button class="button button-royal icon ion-social-google button-round" ng-click="login('google')"></button>
+   </div>
+
+   <div ng-if="!authData" class="list card">
+     <div class="item item-text-wrap item-avatar login-instructions">
+       <img ng-src="img/icon.png" alt=""></img>
+       <h2>Login to comment</h2>
+       <p><i class="icon ion-ios-play"></i> To avoid spam, anonymous comments are not allowed.</p>
+       <p><i class="icon ion-ios-play"></i> We will never post anything without permission.</p>
+     </div>
+   </div>
+
+   <div ng-if="comments.length == 0" class="no-comments">
+     <i class="icon ion-chatbox-working"></i>
+     <p>No Comments Yet</p>
+   </div>
+   <div ng-if="working" class="no-comments">
+     <i class="icon ion-load-a"></i>
+   </div>
+
+
+   <ion-list  class="comment"  >
+     <ion-item class="item-remove-animate item-avatar item-text-wrap " ng-repeat="comment in comments|orderBy:'-comment.date':true track by $index" type="item-text-wrap" >
+       <img ng-src="{{comment.user.image}}"></img>
+       <p><span>{{comment.user.name}} </span>{{comment.text}}</p>
+       <span am-time-ago="comment.date" class="time-ago"></span>
+       <div ng-if="isOwner(comment)" class="comment-action"  ng-click="editComment(comment)">Edit</div>
+       <div ng-if="isOwner(comment)" class="comment-action" ng-click="deleteComment(comment)">Delete</div>
+       <div ng-if="isAdmin()" class="comment-action" ng-click="redactComment(comment)">
+         {{ comment.redact ? 'Redacted':'Redact?'}}
+       </div>
+
+     </ion-item>
+     <div style=" clear: both !important;" ></div>
+   </ion-list>
+
+  </ion-content>
+
+
+   <ion-footer-bar ng-if="authData"  keyboard-attach class="bar-positive comment-footer" >
+    <label class="item-input-wrapper comment ">
+        <textarea class="msd-elastic" style="width:100%" ng-model="currentComment.text" value="" placeholder="Write a comment..." required minlength="1" maxlength="1500" msd-elastic></textarea>
+    </label>
+    <div class="footer-btn-wrap">
+      <button class="button button-icon icon ion-android-send footer-btn" type="submit"
+          ng-disabled="!currentComment.text || currentComment.text === ''"
+          ng-click="saveComment(currentComment);">
+      </button>
+    </div>
+  </ion-footer-bar>
+
+
+
+ </ion-view>

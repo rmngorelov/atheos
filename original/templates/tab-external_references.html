@@ -1,0 +1,110 @@
+
+
+
+<ion-view   >
+
+
+
+
+    <ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+        <ion-nav-back-button></ion-nav-back-button>
+
+      <ion-nav-buttons side="right">
+          <button ng-if="persona.locked" class="button button-icon icon ion-ios-cart" ng-click="purchasePopup()"  >Premium</button>
+          <button class="button button-icon icon ion-search" ui-sref="app.search"  ></button>
+          <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
+  <ion-content class="category has-header ">
+
+
+    <div ng-if="!preferences.scrolls_description_hide" class="card" style="margin: 10px 5px;"
+         ng-click="preferences.scrolls_description_hide = !preferences.scrolls_description_hide"
+    >
+      <div class="item item-text-wrap scroll-header" style="border:0px;">
+
+        <div   ng-if="!essays_only">
+          <div class="screen-description" ng-bind-html="properties['scrolls-description'].description | markdown"></div>
+        </div>
+        <div   ng-if="essays_only && persona.id!='one-the-journey-begins'">
+          <div class="screen-description" ng-bind-html="properties['essays-description'].description | markdown"></div>
+        </div>
+
+
+        <div   ng-if="essays_only && persona.id==='one-the-journey-begins'">
+          <div class="screen-description" ng-bind-html="properties['organization-description'].description | markdown"></div>
+        </div>
+
+
+
+
+       <div class="col-center">
+         <button ng-if="hasContributionTypeAsterisk" ng-click="toggleContributionType('*');$event.stopPropagation();" class="button  button  button-clear icon-right ion-asterisk">All</button>
+         <button ng-if="hasContributionTypeArticle"  ng-click="toggleContributionType('Article');$event.stopPropagation();" class="button  button  button-clear icon-right ion-document-text">Article</button>
+         <button ng-if="hasContributionTypeEssay"  ng-click="toggleContributionType('Essay');$event.stopPropagation();" class="button  button  button-clear icon-right ion-document">Essay</button>
+         <button ng-if="hasContributionTypeBook"  ng-click="toggleContributionType('Book');$event.stopPropagation();" class="button  button  button-clear icon-right ion-ios-book " >Book</button>
+         <button ng-if="hasContributionTypeVideo"  ng-click="toggleContributionType('Video');$event.stopPropagation();" class="button  button button-clear  icon-right ion-social-youtube" >Video</button>
+         <button ng-if="hasContributionTypePodcast"  ng-click="toggleContributionType('Podcast');$event.stopPropagation();" class="button  button  button-clear  icon-right ion-mic-c " >Podcast</button>
+       </div>
+
+
+      </div>
+    </div>
+
+
+
+    <ion-item
+    class="persona item-content item-text-wrap item-icon-right"
+    ng-click="preferences.scrolls_description_hide = !preferences.scrolls_description_hide"
+    style="border-top:0px;"
+    >
+      <div ng-if="preferences.scrolls_description_hide"  >
+        <img class="image-tiny-header" src="img/External-Reference_180x180.png"/>Scrolls
+      </div>
+      <i    class="icon"
+      ng-class="!preferences.scrolls_description_hide ? 'ion-chevron-up' : 'ion-chevron-down'"
+      ></i>
+    </ion-item>
+
+    <ion-list>
+
+      <div ng-repeat="reference in scrollable_references track by $index"  >
+        <ion-item class="persona  item-text-wrap minimum-right-padding"
+                  ng-class="{active: reference.show}"
+                  ng-href="{{!persona.locked ? reference.href_link():''}}"
+                  >
+
+			<table class=a_scroll>
+        <tr ng-click="override_premium(); "
+            ng-class="persona.locked ? 'not-active' : '' "
+        ><td>
+				<img class="image-small" alt="" src="{{reference.image}}" />
+			</td><td>
+
+                <div class="essay-name " ng-bind-html="reference.name | markdown" ></div>
+                <div class="essay-description " ng-bind-html="reference.essay_description | markdown" ></div>
+                <div class="quiz-contributor ">{{reference.contributor}}</div>
+			</td></tr></table>
+
+
+          <div class="button-bar scroll-actions quiz-actions   ">
+            <a  style="clear:left" class="button  quiz-actions button-outline icon-button " ng-class="reference.favorite ? 'ion-ios-star' : 'ion-ios-star-outline'" ng-click="toggleFavorite(reference);$event.stopPropagation();"><span>Like</span></a>
+            <a  class="button  button-outline icon-button ion-chatbox " ng-click="goToStateWithParams({'name':'app.quiz-comments'},{'quizId':'ExternalReference','questionId':reference.id}) "><span>Comment</span></a>
+            <a  class="button button-outline icon-button  ion-android-share-alt "   ng-click="share(reference)" ><span>Share</span></a>
+          </div>
+
+          <div class="counts" style="padding-left:2em;" ng-if="hasCounts(reference.id)">
+              {{formatCounts(reference.id)}}
+          </div>
+
+
+        </ion-item>
+      </div>
+      <ion-infinite-scroll on-infinite="scrollableReferencesAddItems()"></ion-infinite-scroll>
+
+    </ion-list>
+
+  </ion-content>
+
+</ion-view>

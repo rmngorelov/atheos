@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Offline only: everything is read from the files next to this page. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; script-src 'self' file:; style-src 'self' file: 'unsafe-inline'; img-src 'self' file: data:; font-src 'self' file:; connect-src 'none'; frame-src 'none'">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Atheos Study Viewer</title>
+  <link rel="icon" href="original/img/Atheos-Owl_180x180ppi-v1.png">
+  <link rel="stylesheet" href="viewer/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="icon-btn" type="button" data-action="toggle-nav" aria-label="Open menu" aria-controls="sidebar">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <a class="topbar-brand" href="#/">Atheos</a>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="side-head">
+        <a class="brand" href="#/">
+          <img src="original/img/Atheos-Owl_180x180ppi-v1.png" alt="">
+          <span>Atheos<small>Study Viewer</small></span>
+        </a>
+        <button class="icon-btn" type="button" data-action="toggle-theme" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z" fill="currentColor"/></svg>
+        </button>
+      </div>
+      <form class="search" id="search-form" role="search">
+        <input id="search-input" type="search" placeholder="Search questions, essays, terms…" aria-label="Search all content" autocomplete="off">
+      </form>
+      <nav id="nav" aria-label="Contents"></nav>
+    </aside>
+    <div class="scrim" data-action="toggle-nav"></div>
+    <main id="main" tabindex="-1"></main>
+  </div>
+
+  <script src="original/js/build/root_loader.js"></script>
+  <script src="viewer/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+
+
+<ion-view >
+
+  <ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+      <ion-nav-back-button></ion-nav-back-button>
+
+
+      <ion-nav-buttons side="right">
+          <button ng-if="persona.locked" class="button button-icon icon ion-ios-cart" ng-click="purchasePopup()"  >Premium</button>
+          <button class="button button-icon icon ion-search" ui-sref="app.search"  ></button>
+          <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+        </ion-nav-buttons>
+
+  </ion-nav-bar>
+
+
+  <ion-content class="has-header" >
+
+
+    <div ng-if="!preferences.persona_description_hide" class="card heading" style="margin:0px"
+         ng-click="preferences.persona_description_hide = !preferences.persona_description_hide"
+    >
+      <ion-item
+      class="persona item-content item-text-wrap "
+
+        <span class="center-container" ng-if="!preferences.persona_description_hide" >
+          <img  style="float:left" class="image-small" alt="" src="{{persona.image}}" />
+          <p class="screen-description" style="overflow: hidden" ng-bind-html="persona.description | markdown"></p>
+        </span>
+      </ion-item>
+    </div>
+
+
+
+    <ion-item
+    class="persona item-content item-text-wrap item-icon-right heading"
+    ng-click="preferences.persona_description_hide = !preferences.persona_description_hide"
+    style="border-top:0px;"
+    >
+
+        <span class="center-container" ng-if="preferences.persona_description_hide" >
+          <img   class="image-small" alt="" src="{{persona.image}}" />
+          <div class="category center-text " ng-bind-html="persona.name | markdown">
+          </div>
+        </span>
+        <span  ng-if="!preferences.persona_description_hide" >
+          <div class="minimize-header" >Less</div>
+        </span>
+
+      <span  ng-if="preferences.persona_description_hide" class="minimize-header"
+      style="float: right;margin-top: -3em;" >More</span>
+
+      <i    class="icon"
+      ng-class="!preferences.persona_description_hide ? 'ion-chevron-up' : 'ion-chevron-down'"
+      ></i>
+    </ion-item>
+
+
+    <div ng-if="persona.browse_image"  class="browse-image"   >
+        <img  src="{{persona.browse_image}}" />
+    </div>
+
+
+
+    <ion-item
+              type="item-content item-text-wrap"
+              class="persona item-icon-right"
+              ng-repeat="quiz in persona.children"
+              href="#/app/quiz/{{quiz.id}}"
+              >
+
+        <div  ng-if="persona.locked"  class="locked-overlay"></div>
+
+
+        <span class="center-container">
+
+
+
+
+          <i ng-if="!persona.locked" style="z-index: -1;" class="icon ion-chevron-right"  ></i>
+
+          <img  ng-if="quiz.image" class="image-small" alt="" src="{{quiz.image}}" />
+          <img  ng-if="!quiz.image" class="image-small" alt="" src="img/Something-Nothing_180x180_v1.png" />
+          <div class="category center-text item-text-wrap ">{{quiz.name| limitTo: 140}}{{quiz.name.length > 140 ? '...' : ''}}
+            <br/>
+
+            <div ng-if="quiz.score != undefined && preferences.showScore"  class="quiz-score"  >
+              {{ quiz.score.toFixed(0) }}% <i class="ion-university" ></i>
+              <i ng-if="quiz.complete" class="ion-checkmark-round" ></i>
+              {{ quiz.complete ? '' : '...' }}
+            </div>
+            <div ng-if="quiz.score != undefined && !preferences.showScore"  class="quiz-score"  >
+              <i ng-if="quiz.complete" class="ion-checkmark-round" ></i>
+              {{ quiz.complete ? '' : '...' }}
+            </div>
+
+
+          </div>
+        </span>
+
+
+
+
+      <i ng-if="!persona.locked" class="icon ion-chevron-right"  ></i>
+    </ion-item>
+
+
+      <ion-item ng-if="persona.externalReferences.children.length > 0"
+        type="item-content item-text-wrap"
+        class="persona item-icon-right"
+        href="#/app/external_references?persona_id={{persona.id}}" >
+        <div  ng-if="persona.locked"  class="locked-overlay"></div>
+        <span class="center-container">
+          <img   class="image-small  "   src="img/External-Reference_180x180.png" />
+          <span  class="category center-text">Resources</span>
+        </span>
+        <i ng-if="!persona.locked" class="icon ion-chevron-right"  ></i>
+      </ion-item>
+
+
+      <ion-item ng-if="persona.essays.children.length > 0"
+        type="item-content item-text-wrap"
+        class="persona item-icon-right"
+        href="#/app/external_references?persona_id={{persona.id}}&essays_only=true" >
+        <div  ng-if="persona.locked"  class="locked-overlay"></div>
+        <span class="center-container">
+          <img   class="image-small  "   src="img/External-Reference_180x180.png" />
+          <span ng-if="persona.id!='one-the-journey-begins'" class="category center-text">Essays</span>
+          <span ng-if="persona.id==='one-the-journey-begins'" class="category center-text">Organizations</span>
+        </span>
+        <i ng-if="!persona.locked" class="icon ion-chevron-right"  ></i>
+      </ion-item>
+
+
+
+
+  </ion-content>
+</ion-view>

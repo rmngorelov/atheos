@@ -1,0 +1,45 @@
+
+<ion-view cache-view="false" >
+
+  <ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+      <ion-nav-back-button></ion-nav-back-button>
+
+
+  </ion-nav-bar>
+
+
+  <ion-content class="category has-header">
+
+
+    <ion-slide-box on-slide-changed="slideHasChanged($index)"       >
+
+      <ion-slide
+        ng-repeat="question in outro.children"
+      >
+
+
+
+        <div class="box intro slideshow">
+          <img class="image-container" src="{{question.image}}" />
+          <div ng-bind-html="question.description | markdown"></div>
+        </div>
+
+
+      </ion-slide>
+
+    </ion-slide-box>
+
+
+
+  </ion-content>
+
+</ion-view>
+
+<ion-header-bar ng-if="introDone"  style="box-shadow:none !important;border-image-width: 0;height:57px;background: transparent !important; border:0; margin-top:3em">
+  <a
+    ui-sref="app.personas"
+    class="new-items animated fadeInDown"
+    style="text-decoration:none !important"
+     > <i   class="ion-arrow-up-c"></i>&nbsp; Next &nbsp;
+   </a>
+</ion-header-bar>

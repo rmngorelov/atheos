@@ -1,0 +1,9 @@
+# Native-build leftovers from the APK that the browser copy never loads
+original/config.xml.old
+original/README.md
+original/cordova.js
+original/cordova_plugins.js
+original/cordova-js-src/
+original/plugins/
+original/resources/
+original/img/*.psd

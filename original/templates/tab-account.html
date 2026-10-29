@@ -1,0 +1,191 @@
+
+<ion-view  >
+
+<ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+    <ion-nav-back-button></ion-nav-back-button>
+
+  <ion-nav-buttons side="right">
+      <button class="button button-icon icon ion-search" ui-sref="app.search"  ></button>
+      <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+    </ion-nav-buttons>
+
+
+</ion-nav-bar>
+
+<ion-content class=" has-header padding">
+
+<h3 style="vertical-align: middle;">Settings</h3>
+
+<div  class="difficulty-radio">
+
+
+
+ <div class="account-preferences">
+  <ion-toggle
+    class="item   item-icon-left "
+    ng-repeat="item in account_preferences"
+    ng-model="item.checked"
+    ng-checked="item.checked"
+    ng-change="saveAccountPreferences()"
+    >
+   <i class="icon" ng-class="item.icon" ></i>
+   <div class="item-text-wrap">
+      <span>{{ item.text }}</span><span>{{ item.description }}</span>
+    </div>
+    <span style="position:absolute;right:2em;top:4em;font-size:smaller;">{{ item.checked ? 'On' : 'Off' }}</span>
+
+  </ion-toggle>
+
+
+</div>
+
+<div class="account list"  >
+  <a class="category item item-icon-left item-text-wrap" >
+    <i class="icon ion-information"></i>
+    <h3>Last updated:</h3> {{root.updated_at}}
+    <br/>
+    <h3>Version:</h3> <span id=account_version_info></span>
+  </a>
+</div>
+
+
+<h3>Difficulty</h3>
+
+  <ion-radio
+    ng-model="preferences.difficulty"
+    ng-value="'Easy'"
+    ng-click="saveDifficultyPreferences()"
+   >
+
+     <div class="item-icon-left item-text-wrap" >
+        <i class="icon ion-ribbon-b" ></i>
+        <div>
+          <span style="float:left;"   >Easy</span>
+          <span   ng-if="preferences.difficulty === 'Easy' "
+          style="float:left;clear: left;font-family: 'Merriweather Sans' !important;color: #db6b33 !important;">2 answers per most questions</span>
+        </div>
+      </div>
+
+   </ion-radio>
+
+  <ion-radio
+    ng-model="preferences.difficulty"
+    ng-value="'Intermediate'"
+    ng-click="saveDifficultyPreferences()"
+   >
+
+     <div class="item-icon-left item-text-wrap" >
+        <i class="icon ion-trophy" ></i>
+        <div>
+          <span style="float:left;" >Intermediate</span>
+          <span   ng-if="preferences.difficulty === 'Intermediate' "
+          style="float:left;clear: left;font-family: 'Merriweather Sans' !important;color: #db6b33 !important;">3 answers per most questions</span>
+        </div>
+      </div>
+
+   </ion-radio>
+
+  <ion-radio
+    ng-model="preferences.difficulty"
+    ng-value="'Hard'"
+    ng-click="saveDifficultyPreferences()"
+   >
+
+     <div class="item-icon-left item-text-wrap" >
+        <i class="icon ion-university" ></i>
+        <div>
+          <span style="float:left;" >Hard</span>
+          <span   ng-if="preferences.difficulty === 'Hard' "
+          style="float:left;clear: left;font-family: 'Merriweather Sans' !important;color: #db6b33 !important;">4 answers per most questions</span>
+        </div>
+      </div>
+
+   </ion-radio>
+</div>
+
+
+<h3 ng-if="authData">Identity</h3>
+<div class="account list"  >
+  <div ng-if="authData.facebook" class="list item login-avatar">
+    <div class="item item-avatar">
+      <img ng-src="{{authData.facebook.cachedUserProfile.picture.data.url}}"></img>
+      <button class="button  button-small button-icon icon icon-right ion-log-out sign-out" ng-click="logout()"   >Sign Out</button>
+      <h2>{{authData.facebook.displayName}}</h2>
+      <p>Facebook</p>
+    </div>
+  </div>
+
+  <div ng-if="authData.twitter" class="list item login-avatar">
+    <div class="item item-avatar">
+      <img ng-src="{{authData.twitter.cachedUserProfile.profile_image_url_https}}" alt=""></img>
+      <h2>{{authData.twitter.displayName}}</h2>
+      <p>{{authData.twitter.username}}</p>
+      <button class="button  button-small button-icon icon icon-right ion-log-out sign-out" ng-click="logout()"   >Sign Out</button>
+      <p>Twitter</p>
+
+    </div>
+  </div>
+
+  <div ng-if="authData.github" class="list item login-avatar">
+    <div class="item item-avatar">
+      <img ng-src="{{authData.github.cachedUserProfile.avatar_url}}" alt=""></img>
+      <h2>{{authData.github.displayName}}</h2>
+      <p>{{authData.github.username}}</p>
+      <button class="button  button-small button-icon icon icon-right ion-log-out sign-out" ng-click="logout()"   >Sign Out</button>
+      <p>Github</p>
+    </div>
+  </div>
+
+  <div ng-if="authData.google" class="list item login-avatar">
+    <div class="item item-avatar">
+      <img ng-src="{{authData.google.cachedUserProfile.picture}}" alt=""></img>
+      <h2>{{authData.google.displayName}}</h2>
+      <p>{{authData.google.username}}</p>
+      <button class="button  button-small button-icon icon icon-right ion-log-out sign-out" ng-click="logout()"   >Sign Out</button>
+      <p>Google</p>
+    </div>
+  </div>
+
+</div>
+
+<br ng-if="authData.admin" />
+
+
+<h3 ng-if="authData.admin">Testing Support</h3>
+
+<div ng-if="authData.admin" class="account list"  >
+  <a ng-if="!fechingNewData" class="category item item-icon-left" ng-click="resetAll()">
+    <i class="icon ion-code-download"></i>
+     //latest spreadsheet
+  </a>
+  <a ng-if="fechingNewData" class="category item item-icon-left"  >
+    <i class="icon ion-load-a"></i>
+     Getting new configuration
+  </a>
+  <a ng-if="fechingComplete" class="category item item-icon-left"  >
+    <i class="icon ion-code-download"></i>
+     Configuration updated
+  </a>
+  <a class="category item item-icon-left"  ng-click="unlockAll()">
+    <i class="icon ion-unlocked"></i>
+    //unlock all
+  </a>
+
+  <a class="category item item-icon-left"  ng-click="enableTesting()">
+    <i class="icon ion-checkmark-circled"></i>
+    //enable testing
+  </a>
+
+  <a class="category item item-icon-left"  ng-click="answerAll()">
+    <i class="icon ion-checkmark-circled"></i>
+    //answer all
+  </a>
+
+</div>
+
+
+
+
+
+</ion-content>
+</ion-view>

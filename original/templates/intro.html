@@ -1,0 +1,38 @@
+
+<ion-view  cache-view="true"  >
+
+
+    <ion-slide-box   on-slide-changed="slideHasChanged($index)" show-pager="true" active-slide="current_intro_slide"     >
+
+
+      <ion-slide
+        ng-repeat="question in intro.children"
+        class="center-container"
+      >
+
+          <div class="box intro slideshow center-text">
+            <a ng-if="$index==0"
+              ui-sref="app.tutorial"
+              ng-click="toggleSkipIntroduction()" >Skip Introduction</a >
+            <img class="image-container" src="{{question.image}}" />
+            <div  ng-bind-html="question.description  | markdown"></div>
+            <p class="slideshow" ng-bind-html="question.prefix  | markdown"></p>
+          </div>
+
+      </ion-slide>
+
+    </ion-slide-box>
+
+
+
+</ion-view>
+
+
+<ion-header-bar ng-if="introDone"  style="box-shadow:none !important;border-image-width: 0;height:57px;background: transparent !important; border:0; margin-top:3em">
+  <a
+    ng-click="introNext()"
+    class="new-items animated fadeInDown"
+    style="text-decoration:none !important"
+     > <i   class="ion-arrow-up-c"></i>&nbsp; Next &nbsp;
+   </a>
+</ion-header-bar>

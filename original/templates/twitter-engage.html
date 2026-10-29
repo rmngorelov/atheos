@@ -1,0 +1,56 @@
+<ion-view id="twitterEngageView" >
+
+  <ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+      <ion-nav-back-button></ion-nav-back-button>
+      <ion-nav-buttons side="right">
+        <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+      </ion-nav-buttons>
+  </ion-nav-bar>
+
+  <ion-content class="category has-header has-footer">
+
+    <ion-item class="category" >
+      <span class="center-container">
+        <img    class="image-small" alt="" src="{{tweet.avatar}}"    />
+        <span class="category  item-text-wrap  center-text search-result">
+         <i>{{  tweet.user  }}</i> {{  tweet.text  }}
+        </span>
+      </span>
+    </ion-item>
+
+    <ion-spinner ng-if="searching" style="padding-top: 8px;"></ion-spinner>
+
+    <div  ng-if="results.length > 0"  class="list">
+      <div class="collection-item search-item item item-icon-right"
+        collection-repeat="item in results "
+        collection-item-width="'100%'"
+        collection-item-height="getItemHeight(item, $index)"
+        style="overflow: hidden; text-overflow:clip;"
+        ng-style="{height: getItemHeight(item, $index)}  ; "
+        ng-click="tweetSelected(item,tweet)">
+        <div  class="item-stable item-text-wrap" style="overflow: hidden; text-overflow:clip; height:4em; " >
+          <a  style="text-decoration: none; " >
+            <img    class="image-small" alt="" src="{{getImageUrl(item)}}"  style="  height: 4em;width: 4em; margin-right:16px" />
+            <span  ng-if="item.description.length > 1 " class="search-result" >{{  item.description  | limitTo: 140 }}...</span>
+            <span  ng-if="item.essay_description " class="search-result" >{{   item.essay_description    | limitTo: 140 }}...</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+  </ion-content>
+
+  <ion-footer-bar class="bar-positive comment-footer bar-footer"  keyboard-attach>
+   <label class="item-input-wrapper comment ">
+       <textarea class="msd-elastic" style="width:100%" ng-model="tweet.description" value="" placeholder="Write a comment..." required minlength="1" maxlength="1500" msd-elastic></textarea>
+   </label>
+   <div class="footer-btn-wrap">
+     <button class="button button-icon icon ion-android-share-alt footer-btn" type="submit"
+         ng-disabled="!tweet.description || tweet.description === ''"
+         ng-click="share(tweet)">
+     </button>
+   </div>
+ </ion-footer-bar>
+
+</ion-view>

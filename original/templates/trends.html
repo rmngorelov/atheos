@@ -1,0 +1,94 @@
+
+<ion-view>
+
+  <ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+      <ion-nav-back-button>&nbsp;&nbsp;&nbsp;&nbsp;</ion-nav-back-button>
+      <ion-nav-buttons side="right">
+        <button class="button button-icon icon ion-search" ui-sref="app.search"  ></button>
+        <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+      </ion-nav-buttons>
+  </ion-nav-bar>
+
+
+  <ion-content class="category has-header">
+
+
+
+    <div ng-if="!preferences.trends_description_hide" class="card heading" style="margin: 0px;"
+
+    >
+      <ion-item
+      class="persona item-content item-text-wrap "
+        <span class="center-container" ng-if="!preferences.trends_description_hide" >
+          <img ng-click="preferences.trends_description_hide = !preferences.trends_description_hide" style="float:left" class="image-small" alt="" src="img/Trending-180x180-v1.png"  />
+          <p ng-click="preferences.trends_description_hide = !preferences.trends_description_hide" class="screen-description" style="overflow: hidden" ng-bind-html="properties['trends-description'].description | markdown"></p>
+          <p style="float:right;">
+            <button ng-click="showTrending();" class="button  button-clear icon-right ion-arrow-graph-up-right">Trending</button>
+            <button ng-click="showComments();" class="button button-clear icon-right ion-chatbox" >Recent</button>
+          </p>
+        </span>
+      </ion-item>
+    </div>
+
+
+
+    <ion-item
+    class="persona item-content item-text-wrap item-icon-right heading"
+    ng-click="preferences.trends_description_hide = !preferences.trends_description_hide"
+    style="border-top:0px;"
+    >
+        <span class="center-container" ng-if="preferences.trends_description_hide" >
+          <img   class="image-small" alt="" src="img/Trending-180x180-v1.png"  />
+          <div class="category center-text " >Trending</div>
+        </span>
+      <i    class="icon"
+      ng-class="!preferences.trends_description_hide ? 'ion-chevron-up' : 'ion-chevron-down'"
+      ></i>
+    </ion-item>
+
+
+
+    <ion-list ng-if="results.length > 0" >
+      <ion-item class="persona item-icon-right "
+                ng-repeat="item in results  track by $index"
+                href="{{item.url}}"
+                >
+        <span class="center-container ">
+          <img   class="image-small" alt="" src="{{getImageUrl(item)}}" />
+          <span class="category  item-text-wrap  center-text persona"
+          ng-bind-html="item.description + item.essay_description | cut:true:256:' ...' | markdown"></span>
+        </span>
+        <i class="icon ion-chevron-right"  ></i>
+        <div class="counts"  ng-if="hasCounts(item.id)">
+            {{formatCounts(item.id)}}
+        </div>
+      </ion-item>
+      <ion-infinite-scroll on-infinite="scrollableCountsAddItems()"></ion-infinite-scroll>
+    </ion-list>
+
+
+    <ion-list ng-if="comments.length > 0" class="comment"  >
+      <ion-item ng-if="!comment._hide" ng-click="visitCommentItem(comment)" class="item-avatar item-text-wrap item-icon-right " ng-repeat="comment in comments track by $index" type="item-text-wrap" style="margin:2px" >
+        <img ng-src="{{comment.user.image}}"></img>
+        <p><span>{{comment.user.name}} </span>{{comment.text}} </p>
+        <span am-time-ago="comment.date" class="time-ago"></span>
+        <div ng-if="isAdmin()" class="comment-action" ng-click="redactComment(comment)">
+          {{ comment.redact ? 'Redacted':'Redact?'}}
+        </div>
+
+        <i  class="icon ion-chevron-right"  ></i>
+
+      </ion-item>
+      <div style=" clear: both !important;" ></div>
+      <ion-infinite-scroll on-infinite="scrollableCommentsAddItems()"></ion-infinite-scroll>
+    </ion-list>
+
+    <div ng-if="working" class="no-comments">
+      <i class="icon ion-load-a"></i>
+    </div>
+
+
+
+  </ion-content>
+
+</ion-view>

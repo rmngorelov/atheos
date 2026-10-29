@@ -1,0 +1,134 @@
+
+
+
+<ion-view   >
+
+
+
+
+    <ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+        <ion-nav-back-button></ion-nav-back-button>
+
+      <ion-nav-buttons side="right">
+          <button class="button button-icon icon ion-search" ui-sref="app.search"  ></button>
+          <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
+  <ion-content class="category has-header ">
+
+    <div ng-if="!preferences.store_description_hide" class="card heading" style="margin: 0px"
+     ng-click="preferences.store_description_hide = !preferences.store_description_hide"
+    >
+      <div class="item item-text-wrap" style="border:0px;">
+
+        <div   >
+
+          <div class="screen-description" ng-bind-html="properties['store-description'].description | markdown"></div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <ion-item
+    class="persona item-content item-text-wrap item-icon-right heading"
+    ng-click="preferences.store_description_hide = !preferences.store_description_hide"
+    style="border-top:0px;"
+    >
+
+    <div ng-if="preferences.store_description_hide">
+
+      <div   style="clear:left">
+          <img class="image-tiny-header"   src="img/store.png" />
+      </div>
+      <div  >Store</div>
+    </div>
+
+      <i    class="icon"
+      ng-class="!preferences.store_description_hide ? 'ion-chevron-up' : 'ion-chevron-down'"
+      ></i>
+    </ion-item>
+
+
+    <ion-list>
+
+
+      <ion-item  class="persona  item-content item-icon-right"
+                 ng-repeat="product in products()"
+                 ng-if="product.valid && !product.owned"
+                 ng-click="buy(product);">
+        <span class="center-container">
+          <span class="store category  center-text item-text-wrap "  >Purchase {{product.description}} {{product.price}}</span>
+        </span>
+        <i   class="icon ion-ios-cart"></i>
+      </ion-item>
+
+      <ion-item  class="persona  item-content item-icon-right"
+                 ng-repeat="product in products()"
+                 ng-if="!product.valid" >
+        <span class="center-container">
+          <span class="store category  center-text item-text-wrap "  >Purchase {{product.id}} {{product.title}} {{product.description}} {{product.price}} store not available</span>
+        </span>
+        <i   class="icon ion-ios-cart"></i>
+      </ion-item>
+
+
+      <ion-item  class="persona  item-content item-icon-right"
+                 ng-click="openURL('https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RG8HYB76U6B7A')" >
+        <span class="center-container">
+          <span class="store category  center-text item-text-wrap "  >Help support our work. Donate &amp; help us create a better Atheos experience.</span>
+        </span>
+        <i   class="icon ion-cash"></i>
+      </ion-item>
+
+
+
+      <ion-item  class="persona  item-content item-icon-right"
+                 ng-click="openURL('http://www.amazon.com/Manual-Creating-Atheists-Peter-Boghossian/dp/1939578094')" >
+        <span class="center-container">
+          <span class="store category  center-text item-text-wrap "  >Buy “A Manual for Creating Atheists”</span>
+        </span>
+        <i   class="icon ion-ios-book"></i>
+      </ion-item>
+
+      <ion-item  class="persona  item-content "
+                 ng-click="openURL('http://elbowfish.com/jux')" >
+        <span class="center-container">
+          <span class="store category  center-text item-text-wrap "  style="padding-right:40px" >Purchase JUX, a storytelling game for creative thinkers</span>
+          <img style="
+            right: 11px;
+            width: 32px;
+            height: 32px;
+            position: absolute;
+            margin-right: 0px;
+            margin-top: -.5em;
+           "   class=" image-small" alt="" src="img/Scroll-Letters-J-180x180ppi-v1.png" ></img>
+        </span>
+
+
+
+      </ion-item>
+
+      <ion-item  class="persona  item-content item-icon-right"
+                 ng-click="openURL('http://smartappareltees.com/collections/atheos-app/products/atheos-app-t-shirts')" >
+        <span class="center-container">
+          <span class="store category  center-text item-text-wrap "  >Use Coupon Code ATHEOS for 10% off all shirts</span>
+        </span>
+        <i class="icon ion-tshirt"  ></i>
+      </ion-item>
+
+      <ion-item  class="persona  item-content  item-icon-right"
+                 ng-click="restore_products();" >
+        <span class="center-container">
+          <span class="store category  center-text item-text-wrap "  >Restore Purchases</span>
+        </span>
+        <i   class="icon ion-briefcase"></i>
+      </ion-item>
+
+    </ion-list>
+
+
+
+  </ion-content>
+</ion-view>

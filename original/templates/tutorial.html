@@ -1,0 +1,73 @@
+<ion-view   title="Atheos"  >
+
+
+  <ion-nav-bar class="bar-stable nav-title-slide-ios7"   align-title="left">
+
+      <ion-nav-buttons side="right">
+        <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+      </ion-nav-buttons>
+  </ion-nav-bar>
+
+  <!-- see http://www.giikers.com/iwc http://stackoverflow.com/questions/2068344/how-do-i-get-a-youtube-video-thumbnail-from-the-youtube-api on generating thumbnails-->
+  <ion-content class="category has-header ">
+
+    <ion-item
+    class="persona item-content item-text-wrap heading"
+      <span class="center-container"   >
+        <div class="category center-text ">Overview</div>
+      </span>
+    </ion-item>
+
+
+    <ion-list  >
+
+      <div class="list card" >
+      <ion-slide-box on-slide-changed="slideHasChanged($index)">
+        <ion-slide>
+          <div class="box"  >
+            <div class="item item-image" id="image-container" >
+              <a  ng-click="openURL('https://youtu.be/7KmT9rmMfPA')" >
+                <img src="img/snapshot.png" ></img>
+              </a>
+            </div>
+            <ion-item  class="persona   item-icon-right" href="#/app/quiz/one-the-journey-begins-introduction" >
+              <img  class="image-small"    src="img/Enter-The-Cave-Orange-180x180ppi-v1.png" ></img>
+              <span class="category">Get Started!</span>
+              <i class="icon ion-chevron-right"  ></i>
+            </ion-item>
+          </div>
+        </ion-slide>
+        <ion-slide>
+          <div class="box ">
+            <div class="item item-image" id="image-container" >
+              <a  ng-click="openURL('https://www.youtube.com/playlist?list=PLh10RgQgGuM-tnT7fKwgF4Dt57oh_yL5r')" >
+                <img src="img/magnabosco210.png" ></img>
+              </a>
+            </div>
+            <div class="item item-text-wrap"><h2>See these techniques with real people (8:40)</h2></div>
+          </div>
+        </ion-slide>
+        <ion-slide>
+          <div class="box">
+            <div class="item item-image" id="image-container" >
+              <a  ng-click="openURL('https://www.youtube.com/watch?v=orW1AstN7AI')" >
+                <img src="img/no-religion-3.png" ></img>
+              </a>
+            </div>
+            <div class="item item-text-wrap"><h2>See an overview of strategies and techniques  (57:10)</h2></div>            
+          </div>
+        </ion-slide>
+      </ion-slide-box>
+    </div>
+
+
+
+
+
+   </ion-list  >
+
+  </ion-content>
+
+
+
+</ion-view>

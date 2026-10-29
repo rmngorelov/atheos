@@ -1,0 +1,272 @@
+
+
+<!--
+  This template loads for the 'tab.quiz-detail' state (app.js)
+  'firend' is a $scope variable created in the QuizsCtrl controller (controllers.js)
+  The QuizDetailCtrl pulls data from the Quizzes service (service.js)
+  The Quiz service returns an array of quiz data
+-->
+
+
+
+<ion-view id="quiz" hide-back-button="false"   >
+
+
+    <ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+        <ion-nav-back-button></ion-nav-back-button>
+
+
+
+      <ion-nav-buttons side="right">
+        <button ng-if="persona.locked" class="button button-icon icon ion-ios-cart" ng-click="purchasePopup()"  >Premium</button>
+        <button class="button button-icon icon ion-search" ui-sref="app.search"   ></button>
+        <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+      </ion-nav-buttons>
+
+    </ion-nav-bar>
+
+
+  <!-- REMOVE overflow scroll for compiled version -->
+  <ion-content
+     overflow-scroll="false"
+     class="has-header"
+     delegate-handle="quiz-detail"
+   >
+    <!-- <ion-refresher
+      on-refresh="showNewFeedItems()">
+    </ion-refresher> -->
+
+    <div ng-if="!quiz.description_hide" class="card heading" style="margin: 0px "
+      ng-click="toggleQuizHeader($event)"
+      >
+      <div class="item item-text-wrap" style="border:0px;padding-top:8px;">
+
+        <div   >
+          <div >
+            <span style="float:left;" ng-if="quiz.quiz_prefix"  >{{quiz.quiz_prefix}}</span>
+            <div style="clear:left">
+                <img style="clear:left" ng-if="quiz.image" class="image-medium" alt="" src="{{quiz.image}}" />
+            </div>
+            <strong>{{quiz.name}}<br/></strong>{{quiz.description}}<br/>
+
+            <span class="quiz-contributor">{{quiz.contributor}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ion-item
+    class="card heading"
+    ng-if="!quiz.description_hide"
+    style="border:0px;border:0px;margin:0px;"
+    >
+      <div ng-if="quiz.score != undefined" ng-class="quiz.complete ? 'green' : '' " class="quiz-prefix item-text-wrap"  style="padding-bottom:1em;" >
+        <span ng-if="preferences.showScore">Score {{ quiz.score.toFixed(0) }}%  Correct:{{ quiz.total_correct }}, Incorrect:{{ quiz.total_incorrect }}, </span>
+        Progress:
+       {{ quiz.complete ? (quiz.total_correct + quiz.total_incorrect)+"/"+(quiz.total_correct + quiz.total_incorrect) : quiz.current_question+"/"+quiz.total_questions }}
+      </div>
+
+      <button  ng-click="toggleScore()" class="button  button-clear icon-right ion-university">Scoring {{preferences.showScore ? 'on' : 'off' }}</button>
+      <button  ng-click="restartQuiz(quiz)" class="button button-clear icon-right ion-refresh" >Restart Quiz</button>
+
+
+      <div ng-if="testing_enabled" ng-click="answerQuiz(quiz)" style="display: inline-block;" >Answer Quiz
+      <i class="icon ion-checkmark-circled"></i>
+      </div>
+    </ion-item>
+
+
+    <ion-item
+    class="persona item-content item-text-wrap item-icon-right heading"
+    ng-click="toggleQuizHeader($event)"
+    style="border-top:0px;"
+    >
+
+      <div ng-if="quiz.description_hide">
+        <div   style="clear:left">
+            <img class="image-tiny-header" alt="" src="{{quiz.image}}" />
+        </div>
+
+        {{quiz.name}}
+        <span ng-if="quiz.score != undefined && preferences.showScore"
+              ng-class="quiz.complete ? 'green' : '' "
+              class="quiz-prefix"
+               >
+          {{ quiz.score.toFixed(0) }}%  <i class="ion-university" ></i>
+          {{ quiz.complete ? (quiz.total_correct + quiz.total_incorrect)+"/"+(quiz.total_correct + quiz.total_incorrect) : quiz.current_question+"/"+quiz.total_questions }}
+        </span>
+        <span ng-if="quiz.score != undefined && !preferences.showScore"
+              ng-class="quiz.complete ? 'green' : '' "
+              class="quiz-prefix"
+               >
+          {{ quiz.complete ? (quiz.total_correct + quiz.total_incorrect)+"/"+(quiz.total_correct + quiz.total_incorrect) : quiz.current_question+"/"+quiz.total_questions }}
+        </span>
+
+      </div>
+      <i    class="icon"
+      ng-class="!quiz.description_hide ? 'ion-chevron-up' : 'ion-chevron-down'"
+      ></i>
+    </ion-item>
+
+
+
+   <a id="questions-top"></a>
+
+<!--
+   <a
+     ng-click="swipeRight($event)"
+     class="button-float animated slideInLeft"
+     style="
+         top: {{dev_height/2}}px;
+         left: {{dev_width - 60}}px;
+     "
+      > <i class="icon ion-chevron-right"></i></a> -->
+
+   <button
+    class="button button-float"
+    ng-class="!(show_next && !next_in_quiz_item) ? 'hidden' : 'animated slideInLeft' "
+    ng-click="swipeRight($event)"
+    style="
+        top: {{dev_height/2}}px;
+        left: {{dev_width - 60}}px;
+    "
+    >
+     <i class="icon ion-chevron-right" style="color:white !important;"></i>
+   </button>
+
+
+
+
+   <ion-list  >
+        <ion-item
+        ng-repeat="question in scrollable_feed track by $index"
+        ng-class="(question.animate) ? 'quiz-item e '  : 'quiz-item'"
+        style="border:0px; margin: 5px 0px;width:100%;"
+        ng-style="question.correct && !$first ? {opacity: '0.7' } :{}"
+        id="{{question.id}}"
+        on-swipe-left="swipeLeft($event)"
+        on-swipe-right="swipeRight($event)"
+        >
+
+          {{disableAnswers = question.correct && !$first ;'';}}
+          <div class="question item-content item-text-wrap "  style="padding: 10px 14px;"
+          >
+
+            <span ng-if="question.prefix"   class="questionprefix" ng-bind-html="question.prefix | markdown"></span>
+
+
+            <img ng-if="question.reference_image"  class="question" src="{{question.reference_image}}" />
+
+
+
+            <a   ng-if="question.image" >
+              <img  class="image-container" alt="" src="{{question.image}}" />
+            </a>
+            <div ng-if="question.video"  class="video-container"   >
+              <iframe ng-src="{{videoURL(question)}}" frameborder="0" ></iframe>
+            </div>
+
+
+
+            <span class="questiondescription"  style=" hanging-punctuation: first;" ng-bind-html="'&ldquo;' +  question.description + '&rdquo;'  | markdown"></span>
+
+            <div  ng-if="question.reference" style="margin-top:16px;"  class="questionreference">
+              <span   ng-bind-html="question.reference  | markdown"></span>
+            </div>
+
+
+
+          </div>
+
+
+
+
+          <div  style="margin-bottom:0px !important" ng-if="question.children.length > 0" class="answer list"  style="border:0px; "
+            >
+
+
+
+
+              <div   ng-repeat="answer in question.children" class=" item item-radio "   ng-if="!answer.hidden"
+              style="border:0px;background: #ffe8db  !important;"
+              >
+
+              <!-- change(question) -->
+
+
+                  <button
+                    ng-disabled="disableAnswers"
+                    ng-click="change(question,answer.id)"
+                    class="button-clear answer-radio "
+                  >
+                  <i  ng-show="question.answer_id != answer.id"
+                  class="icon ion-android-checkbox-outline-blank answer-radio item-icon-right icon"
+                  ></i>
+                  <i   ng-show="(question.answer_id == answer.id) && answer.correct  "
+                    class="icon ion-checkmark answer-radio item-icon-right icon"
+                    style="color:green !important;"
+                    ng-disabled="disableAnswers"
+                    ng-click="change(question,answer.id)"
+                  ></i>
+                  <i
+                    ng-show="(question.answer_id == answer.id) && !answer.correct  "
+                    class="icon ion-close answer-radio item-icon-right icon"
+                    ng-disabled="disableAnswers"
+                    ng-click="change(question,answer.id)"
+                  ></i>
+
+                </button>
+
+                <card
+
+                       >
+                    <div class="answer item-content item-text-wrap "
+                    ng-class="!disableAnswers  ? 'animated fadeIn' : '' "
+                    style="; -vendor-animation-delay: 3s; margin-right: 50px"
+                    ng-click="!disableAnswers && touch_sensitive_answers && change(question,answer.id)"
+                      >
+                      {{answer.description}}
+                      <span ng-if="((question.answer_id == answer.id) && !answer.correct) || question.correct"
+                      class="wrong-answer-explaination" ><br/>{{answer.whypoor}}</span>
+                      <div ng-if="(answer.correct && question.correct)"
+                        class="correct-answer-explaination"
+                        >
+                        {{ whycorrect_explanation[question.id + "-" +answer.id] }}
+                      </div>
+                    </div>
+
+                  </card>
+
+              </div>
+            </div>
+
+            <div class="button-bar inline-counts"  ng-if="hasCounts(question.id)" ng-click="goToStateWithParams({'name':'app.quiz-comments'},{'quizId':quiz.id,'questionId':question.id}) ">
+                {{formatCounts(question.id)}}
+            </div>
+
+          <div class="button-bar quiz-actions">
+            <a  style="clear:left" class="button  quiz-actions button-outline icon-button " ng-class="question.favorite ? 'ion-ios-star' : 'ion-ios-star-outline'" ng-click="toggleFavorite(question);$event.stopPropagation();"><span>Like</span></a>
+            <a  class="button  button-outline icon-button ion-chatbox " ng-click="goToStateWithParams({'name':'app.quiz-comments'},{'quizId':quiz.id,'questionId':question.id}) "><span>Comment</span></a>
+            <a  class="button icon-button ion-android-share-alt "   ng-click="share(question)" ><span>Share</span></a>
+          </div>
+
+
+
+
+        </ion-item>
+        <ion-infinite-scroll on-infinite="scrollableFeedAddItems()"></ion-infinite-scroll>
+      </ion-list>
+
+  </ion-content>
+
+
+<!--
+<ion-header-bar ng-if="show_next && !next_in_quiz_item"  style="box-shadow:none !important;border-image-width: 0;height:57px;background: transparent !important; border:0; margin-top:3em">
+  <a
+    ng-click="quiz.go_back_shown = false ;showNewFeedItems($event)"
+    class="new-items animated fadeInDown"
+     > <i   class="ion-arrow-up-c"></i>&nbsp; Next &nbsp; </a>
+</ion-header-bar> -->
+
+
+</ion-view>

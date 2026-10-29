@@ -1,0 +1,76 @@
+
+
+<ion-view>
+
+
+  <ion-nav-bar class="bar-stable nav-title-slide-ios7" >
+      <ion-nav-back-button></ion-nav-back-button>
+
+        <ion-nav-buttons side="right">
+            <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+          </ion-nav-buttons>
+
+  </ion-nav-bar>
+
+
+  <ion-content class="category has-header">
+
+<!--     <div ng-if="data.searchQuery.length==0" class="card" style="margin: 10px 5px;">
+      <div class="item item-text-wrap" style="border:0px;">
+
+        <div   >
+
+          <div class="screen-description" ng-bind-html="properties['twitter'].description | markdown"></div>
+
+        </div>
+      </div>
+    </div>
+ -->
+
+    <ion-item
+    class="persona item-content item-text-wrap item-icon-left item-icon-right"
+    ng-click="preferences.twitter_description_hide = !preferences.twitter_description_hide"
+    >
+      <i class="clear-search icon ion-ios-close-empty" style="left:4px" ng-click="clearTwitterSearch()"></i>
+
+        <input style="width:100%" type="search" placeholder="{{properties['twitter'].description}}" ng-model="data.searchTwitter">
+
+
+      <i    class="icon ion-search" ng-click="twitter_search()" ></i>
+    </ion-item>
+
+
+
+    <ion-spinner ng-if="searching" style="padding-top: 8px;"></ion-spinner>
+
+    <div  ng-if="twitter_error && twitter_error != 200"  class="list saved-search-query">
+      <h4>Error:Twitter service down, please try later ({{twitter_error}})</h4>
+    </div>
+
+    <div  ng-if="(!twitter_results || twitter_results.length == 0) && preferences.recentTwitterQuery"  class="list saved-search-query" style="padding-top: 8px;">
+      <h4>Recently Searched:</h4>
+      <!-- ng-repeat arrays of strings weirdness -->
+      <div ng-repeat="query in preferences.recentTwitterQuery track by $index">
+        <p   ng-click="data.searchTwitter=preferences.recentTwitterQuery[$index];twitter_search()" >{{preferences.recentTwitterQuery[$index]}}</p>
+      </div>
+    </div>
+
+    <div  ng-if="twitter_results.length > 0 "  class="list" style="padding-top: 8px;">
+        <div  class="item-stable item-text-wrap "
+              ng-click="twitter_engage(item)"
+              ng-repeat="item in twitter_results"
+              style ="padding-top:4px"
+               >
+          <span  class="center-container" >
+            <img    class="image-small" alt="" src="{{item.avatar}}"  style="  height: 4em;width: 4em; margin-right:16px" />
+            <span   class="search-result center-text" > <i>{{item.user}}</i> {{  item.text  }} </span>
+          </span>
+      </div>
+    </div>
+
+
+
+
+  </ion-content>
+
+</ion-view>

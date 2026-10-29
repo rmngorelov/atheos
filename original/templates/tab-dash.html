@@ -1,0 +1,136 @@
+
+
+
+<ion-view  title="Atheos"  cache-view="false"   >
+
+
+
+<ion-nav-view  >
+
+    <ion-nav-bar class="bar-stable nav-title-slide-ios7"   align-title="left">
+
+      <ion-nav-buttons side="right">
+        <button class="button button-icon icon ion-search" ui-sref="app.search"  ></button>
+        <button class="button button-icon icon ion-navicon" ng-click="toggleRight()"   ></button>
+      </ion-nav-buttons>
+
+    </ion-nav-bar>
+
+
+</ion-nav-view>
+
+
+  <ion-content overflow-scroll="false"  class="has-header" >  <!-- REMOVE overflow scroll for compiled version Error: [$compile:ctreq] Controller '$ionicScroll', required by directive 'ionRefresher', can't be found!-->
+
+
+
+
+
+<div id="crossfade-container" class="row row-center"
+  ui-sref="app.personas"
+  >
+  <div id="crossfade" class="col-50" >
+     <img class="solid1" src="img/platonicSolid1-black.png" alt="Tetrahedron">
+     <img class="solid2" src="img/platonicSolid2-black.png" alt ="Cube">
+     <img class="solid3" src="img/platonicSolid3-black.png" alt="Octahedron">
+     <img class="solid4" src="img/platonicSolid4-black.png" alt="Dodecahedron">
+     <img class="solid5" src="img/platonicSolid5-black.png" alt="Icosahedron">
+  </div>
+</div>
+    <ion-item  ng-if="!quizzes" type="item-text-wrap"   >
+      <div class="category item-content item-text-wrap">
+        {{properties['loading'].description}}
+      </div>
+    </ion-item>
+
+
+
+    <ion-list ng-if="quizzes" class="persona styled-list">
+
+
+
+      <ion-item  class="persona    item-icon-right"
+        ui-sref="app.personas"
+        nav-direction="forward"
+        >
+
+        <span class="center-container">
+          <img   class="image-small"   src="img/Enter-The-Cave-Orange-180x180ppi-v1.png" />
+          <span class="category center-text">
+            {{properties['start'].description}}
+          </span>
+
+        </span>
+
+
+        </span>
+
+        <i class="icon ion-chevron-right"  ></i>
+      </ion-item>
+
+      <ion-item ng-if="preferences.favorites.length > 0" class="persona   item-icon-right" ui-sref="app.favorites" >
+
+        <span class="center-container">
+          <img   class="image-small"   src="img/Favorites_48x48ppi-v1.png" />
+          <span class="category center-text">{{properties['favorites'].description}}</span>
+        </span>
+
+        <i class="icon ion-chevron-right"  ></i>
+      </ion-item>
+
+
+      <!-- <ion-item  class="persona  item-content item-icon-right"  ui-sref="app.twitter-search" >
+        <span class="center-container">
+           <i  class="ion-social-twitter fonticon-small "  ></i>
+          <span class="category  center-text "  >Twitter</span>
+        </span>
+        <i class="icon ion-chevron-right"  ></i>
+      </ion-item> -->
+
+      <ion-item ng-if="pageRanks.length > 0"   class="persona  item-icon-right" ui-sref="app.trends" >
+
+        <span class="center-container">
+          <img   class="image-small"  src="img/Trending-180x180-v1.png" />
+          <span class="category center-text">{{properties['trending'].description}}</span>
+        </span>
+
+        <i class="icon ion-chevron-right"  ></i>
+      </ion-item>
+
+      <ion-item   class="persona    item-icon-right" ui-sref="app.awards" >
+
+        <span class="center-container">
+          <img   class="image-small  "   src="img/achievements.png" />
+          <span class="category center-text">{{properties['awards'].description}}</span>
+        </span>
+
+        <i class="icon ion-chevron-right"  ></i>
+      </ion-item>
+
+
+
+
+
+<!--
+      <ion-item  class="persona    item-icon-right" ui-sref="app.account" >
+        <span class="center-container">
+          <img   class="image-small"   src="img/Settings_180x180_v1.png" />
+          <span class="category center-text" >{{properties['settings'].description}}</span>
+        </span>
+        <i class="icon ion-chevron-right"  ></i>
+      </ion-item>
+ -->
+
+<!-- ng-click="openURL('http://www.atheos-app.com/')" -->
+
+
+
+
+
+
+    </ion-list>
+
+
+  </ion-content>
+
+ </ion-view>
